@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->string('comment');
+            $table->string('user_id')->reference('id')->on('users');
+            $table->string('post_id')->reference('id')->on('posts');
             $table->timestamps();
         });
     }
