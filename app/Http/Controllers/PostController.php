@@ -13,7 +13,6 @@ class PostController extends Controller
      {
          $userId = auth()->user()->id;
          $user = User::find($userId);
- 
      
      }
      /**

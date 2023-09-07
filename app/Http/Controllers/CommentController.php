@@ -16,12 +16,20 @@ class CommentController extends Controller
           $user = User::find($userId);
       
       }
+      //getting post id
+      public function getPostData()
+      {
+         
+          $post = Post::find($postId);
+      
+      }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $c=Comment::get();
+        return view('comment/index',compact('c'));
     }
 
     /**
@@ -37,7 +45,16 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user(); // Get the currently authenticated user
+        $comment = $request->input('comment');// Assuming the text input comes from the request
+    
+        $comment = new Comment([
+            'user_id' => $user->id,
+            'post_id' => $post->id,
+            'comment' => $title,
+            
+        ]);
+        $comment->save();
     }
 
     /**
@@ -45,7 +62,8 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        $comment=Comment::all($id);
+         return response()->json($comment);
     }
 
     /**
@@ -69,6 +87,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+         return redirect (url('index-comment'));
     }
 }
