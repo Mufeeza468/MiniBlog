@@ -9,17 +9,12 @@ use App\Http\Controllers\PostController;
 Route::get('/', function () {
     return view('welcome');
 });
-<<<<<<< HEAD
-//post
-=======
 
 //Post 
->>>>>>> post
 Route::get('create-post', [PostController::class, 'create']);
 Route::get('store-post', [PostController::class, 'store']);
 Route::get('index-post', [PostController::class, 'index']);
 
-<<<<<<< HEAD
 //comment
 Route::get('create-comment', [CommentController::class, 'create']);
 Route::get('store-comment', [CommentController::class, 'store']);
@@ -27,10 +22,10 @@ Route::get('index-comment', [CommentController::class, 'index']);
 
 
 
-=======
+
 
 Route::get('/post/{slug}',[PostController::class,'show']);
->>>>>>> post
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

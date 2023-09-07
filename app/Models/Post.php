@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-<<<<<<< HEAD
+    protected $guarded=[];
 
     public function users(){
         return $this->belongsTo(User::class);
@@ -16,16 +16,6 @@ class Post extends Model
 
     public function comments(){
         return $this->belongsTo(Comment::class);
-=======
-    protected $guarded=[];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 
-    public function comment(){
-        return $this->hasMany(Comment::class);
->>>>>>> post
-    }
 }
