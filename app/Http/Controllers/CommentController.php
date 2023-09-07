@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\User;
 
 class CommentController extends Controller
 {
+      //getting user id
+      public function getUserData()
+      {
+          $userId = auth()->user()->id;
+          $user = User::find($userId);
+      
+      }
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +29,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        return view('comment/create');
     }
 
     /**
