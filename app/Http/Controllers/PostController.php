@@ -1,31 +1,38 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    //getting user id
+        public function getUserData()
+    {
+        $userId = auth()->user()->id;
+        $user = User::find($userId);
+
+    
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json(["result" => "ok"], 201);
+        $p=Post::get();
+        return view('post/index',compact('p'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
     {
-        $user=$request->user();
-        $post=new Post;
-        $post->title=$request->title;
-        $post->body=$request->body;
-        $user->post()->save($post);
+        return view('post/create');
     }
 
     /**
@@ -33,15 +40,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $post = new Post;
 
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->slug = $request->slug;
- 
+        $user = Auth::user(); // Get the currently authenticated user
+        $title = $request->input('title'); 
+        $body = $request->input('body');// Assuming the text input comes from the request
+    
+        $post = new Post([
+            'user_id' => $user->id,
+            'title' => $title,
+            'body' => $body,
+        ]);
         $post->save();
- 
-        return response()->json(["result" => "ok"], 201);
     }
 
     /**
@@ -49,9 +58,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        return view('post', [
-            'post' => Post::where('slug', '=', $slug)->first()
-        ]);
+        $post=Post::all($id);
+        return response()->json($post);
     }
 
     /**
@@ -67,14 +75,22 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data=$request->validate([
+            'title'=> 'required',
+            'body'=> 'required',
+            'user_id'=>'required',
+        ]);
+
+        $post->update($data);
+        return redirect(url('index-post'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(post $post)
     {
-        //
+        $post->delete();
+        return redirect (url('index-post'));
     }
 }

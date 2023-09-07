@@ -9,6 +9,13 @@ use App\Http\Controllers\PostController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Post 
+Route::get('create-post', [PostController::class, 'create']);
+Route::get('store-post', [PostController::class, 'store']);
+Route::get('index-post', [PostController::class, 'index']);
+
+
 Route::get('/post/{slug}',[PostController::class,'show']);
 
 Route::get('/dashboard', function () {
