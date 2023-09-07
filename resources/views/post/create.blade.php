@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <form>
+    <form action="store-post" method='get'>
   <div class="form-group">
     <label for="title">Title</label>
     <br/>
