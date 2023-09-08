@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 
 
@@ -22,16 +23,8 @@ Route::get('update-post/{post}', [PostController::class, 'update']);
 
 
 
-//comment
-Route::get('create-comment', [CommentController::class, 'create']);
-Route::get('store-comment', [CommentController::class, 'store']);
-Route::get('index-comment', [CommentController::class, 'index']);
+Route::get('/post/comment', 'App\Http\Controllers\CommentController@store')->name('comment.store');
 
-
-
-
-
-Route::get('/post/{slug}',[PostController::class,'show']);
 
 
 Route::get('/dashboard', function () {

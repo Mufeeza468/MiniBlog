@@ -16,7 +16,7 @@ class Post extends Model
 }
 
 
-    public function comments(){
+    public function comment(){
         return $this->belongsTo(Comment::class);
     }
 

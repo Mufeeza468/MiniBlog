@@ -6,9 +6,15 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+
+    function comment()
+    {
+        return Comment::all();
+    }
       //getting user id
       public function getUserData()
       {
@@ -16,20 +22,13 @@ class CommentController extends Controller
           $user = User::find($userId);
       
       }
-      //getting post id
-      public function getPostData()
-      {
-         
-          $post = Post::find($postId);
-      
-      }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $c=Comment::get();
-        return view('comment/index',compact('c'));
+        // $c=Comment::get();
+        // return view('comment/index',compact('c'));
     }
 
     /**
@@ -37,7 +36,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        return view('comment/create');
+       //
     }
 
     /**
@@ -46,16 +45,18 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user(); // Get the currently authenticated user
-        $comment = $request->input('comment');// Assuming the text input comes from the request
     
-        $comment = new Comment([
-            'user_id' => $user->id,
-            'post_id' => $post->id,
-            'comment' => $title,
-            
-        ]);
-        $comment->save();
+            $cmt = new Comment([
+                'user_name' => $user->name,
+                'post_id' => $request->input('post_id'),
+                'comment' => $request->input('comment'),
+            ]);
+            $cmt->save();
+    
+            return redirect( url('index-post'));
+        
     }
+    
 
     /**
      * Display the specified resource.

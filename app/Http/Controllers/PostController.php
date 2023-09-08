@@ -29,11 +29,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $currentUser = Auth::user();
-
-        // Fetch all posts except the ones created by the current user
-        $posts = Post::where('user_id', '!=', $currentUser->id)->get();
-    
+        
+        $posts = Post::all();
         return view('post/index', ['post' => $posts]);
     }
 
