@@ -10,21 +10,31 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    //getting user id
-        public function getUserData()
-    {
-        $userId = auth()->user()->id;
-        $user = User::find($userId);
 
+    function post()
+    {
+        return Post::all();
+    }
     
+    /*
+    getting user id
+    */
+    public function getUserData()
+    {
+       $user_name = auth()->user()->name;
+       $user = User::find($user_name);
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $p=Post::get();
-        return view('post/index',compact('p'));
+        $currentUser = Auth::user();
+
+        // Fetch all posts except the ones created by the current user
+        $posts = Post::where('user_id', '!=', $currentUser->id)->get();
+    
+        return view('post/index', ['post' => $posts]);
     }
 
     /**
@@ -46,11 +56,14 @@ class PostController extends Controller
         $body = $request->input('body');// Assuming the text input comes from the request
     
         $post = new Post([
+            'user_name' => $user->name,
             'user_id' => $user->id,
             'title' => $title,
             'body' => $body,
         ]);
         $post->save();
+
+        return redirect( url('index-post'));
     }
 
     /**
@@ -58,27 +71,28 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post=Post::all($id);
-        return response()->json($post);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(post $post)
     {
-        //
+        $p = Post::get();
+        return view('post/edit', compact('p'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, post $post)
     {
         $data=$request->validate([
             'title'=> 'required',
             'body'=> 'required',
-            'user_id'=>'required',
+            'user_name'=>'required',
+            'user_id' => 'required',
         ]);
 
         $post->update($data);

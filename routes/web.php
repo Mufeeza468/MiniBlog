@@ -15,6 +15,13 @@ Route::get('create-post', [PostController::class, 'create']);
 Route::get('store-post', [PostController::class, 'store']);
 Route::get('index-post', [PostController::class, 'index']);
 
+//Actions
+Route::get('destroy-post/{post}', [PostController::class, 'destroy']);
+Route::get('edit-post/{post}', [PostController::class, 'edit']);
+Route::get('update-post/{post}', [PostController::class, 'update']);
+
+
+
 //comment
 Route::get('create-comment', [CommentController::class, 'create']);
 Route::get('store-comment', [CommentController::class, 'store']);
@@ -28,7 +35,7 @@ Route::get('/post/{slug}',[PostController::class,'show']);
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('post/create');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
