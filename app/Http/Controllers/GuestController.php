@@ -15,7 +15,16 @@ class GuestController extends Controller
      */
     public function index()
     {
-        return Post::all();
+        $posts = Post::all();
+
+        // Initialize an empty array to store the post IDs
+        $postIds = [];
+
+        // Iterate through the posts and extract the IDs
+        foreach ($posts as $post) {
+            $postIds[] = $post->id;
+        }
+        return view('guest/index', ['post' => $posts]);
     }
 
     /**
