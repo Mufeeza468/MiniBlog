@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\GuestController;
 
 
 
@@ -21,7 +22,7 @@ Route::get('destroy-post/{post}', [PostController::class, 'destroy']);
 Route::get('edit-post/{post}', [PostController::class, 'edit']);
 Route::get('update-post/{post}', [PostController::class, 'update']);
 
-
+Route::get('/guest', 'App\Http\Controllers\GuestController@index')->name('guest.home');
 
 Route::get('/post/comment', 'App\Http\Controllers\CommentController@store')->name('comment.store');
 
