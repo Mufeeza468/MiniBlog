@@ -5,7 +5,7 @@
 /public/storage
 /storage/*.key
 /vendor
-composer.lock.json
+composer.lock
 package-lock.json
 .env
 .env.backup
